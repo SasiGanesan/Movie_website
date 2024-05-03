@@ -14,7 +14,7 @@ const movieSchema = new mongoose.Schema({
     }],
     producer : {
         type: mongoose.Schema.Types.ObjectId,
-        ref:Producer,
+        ref:'Producer',
         required: true
     },
     poster:{
@@ -25,6 +25,6 @@ const movieSchema = new mongoose.Schema({
     timestamps:true,
 })
 
-const  Movie=mongoose.model("Movie",movieSchema)
+const  Movie = mongoose.model("Movie",movieSchema)
 
 export default Movie

@@ -1,4 +1,4 @@
-import Movie from "../Model/movieModel";
+import Movie from "../Model/movieModel.js";
 
 const createMovie = async(req,res)=>{
     try {
@@ -6,10 +6,9 @@ const createMovie = async(req,res)=>{
 
         const existingMovie = await Movie.findOne({name})
         if(existingMovie){
-            return res.status(404).json({message: "This movie already existed"});    
+            return res.status(404).json({message: "This movie already exists"});    
         }
         const user_id = req.user_id
-
         //create Movie
         const movie = await Movie.create({
             name, yearOfRelease,actors,producer,poster
@@ -56,10 +55,10 @@ const updateMovie = async(req,res)=>{
         if (!movie) {
             return res.status(404).json({ message: 'Movie not found' });
         }
-
-        res.status(200).json({ message: 'Movie updated successfully', movie });
+        
+        return res.status(200).json({ message: 'Movie updated successfully', movie });
     } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' });
+        return res.status(500).json({ message: 'Internal Server Error' });
         // console.log(error)
     }
 }
