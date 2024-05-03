@@ -2,11 +2,11 @@ import Movie from "../Model/movieModel.js";
 
 const createMovie = async(req,res)=>{
     try {
-        const {name, yearOfRelease,actors,producer,poster} = req.body;
+        const {name,yearOfRelease,actors,producer,poster} = req.body;
 
         const existingMovie = await Movie.findOne({name})
         if(existingMovie){
-            return res.status(404).json({message: "This movie already exists"});    
+            return res.status(400).json({message: "This movie already exists"});    
         }
         const user_id = req.user_id
         //create Movie
@@ -23,45 +23,68 @@ const createMovie = async(req,res)=>{
                 poster:movie.producer
             })
         }
-
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Internal Server Error' });
-        // console.log(error)
+        
     }
 }
 
 const getAllMovies = async(req,res)=>{
     try {
-        const movie = await Movie.find({})
-        if(movie){
-            return res.status(200).json(movie)
+        const movies = await Movie.find({})
+        if(movies){
+            return res.status(200).json(movies)
         }else{
-            return res.status(400).json({message: "can't retrieve movies"})
+            return res.status(400).json({message: "movies not found"})
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Internal Server Error' });
-        // console.log(error)
     }
 }
 
 const updateMovie = async(req,res)=>{
     try {
-        const {movie_id}=req.params.id;
-        const { name, yearOfRelease, actors, producer, poster } = req.body;
-        const movie = await Movie.findByIdAndUpdate(
+        const movie_id = req.params.id;
+        console.log(movie_id)
+        // const { name, yearOfRelease, actors, producer, poster } = req.body;
+        const { yearOfRelease } = req.body;
+        // console.log(name, yearOfRelease, actors, producer, poster)
+        const updatedMovie = await Movie.findByIdAndUpdate(
             movie_id,
-            { name, yearOfRelease, actors, producer, poster },
+            { yearOfRelease: yearOfRelease },// Only update yearOfRelease
+            // { name:name} ,
+            // {actors:actors},
+            // {producer:producer},
+            // {poster:poster},
+            { new: true } // To return the updated movie
         );
-        if (!movie) {
+        if (!updatedMovie) {
             return res.status(404).json({ message: 'Movie not found' });
         }
         
-        return res.status(200).json({ message: 'Movie updated successfully', movie });
+        return res.status(200).json({ message: 'Movie updated successfully', updatedMovie });
     } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error' });
-        // console.log(error)
+        console.log(error)
+        return res.status(500).json({ message: 'Internal Server Error' }); 
     }
 }
 
+const getMovieById =async(req,res)=>{
+    try {
+        const movie=await Movie.findById(req.params.id)
+        if(movie){       
+          res.status(200).json(movie);
+        }else{
+            res.status(404).json({
+                message: "Movie not found"
+            })
+        }
+    } catch (error) {
+        // console.error(error);
+        res.status(500).json({ message: 'Invalid Movie Id' });
+    } 
+}
 
-export {createMovie,getAllMovies,updateMovie}
+export {createMovie,getAllMovies,updateMovie,getMovieById}

@@ -20,8 +20,8 @@ app.use(express.urlencoded({extended:false}))
 // api creation
 app.use('/api/Users',userRoutes)
 app.use('/api/Actors',actorRoutes)
-app.use('/api/movies',movieRoutes)
-app.use('/api/producers',producerRoutes)
+app.use('/api/Movies',movieRoutes)
+app.use('/api/Producers',producerRoutes)
 
 
 app.listen(port,()=>{

@@ -6,7 +6,8 @@ const movieSchema = new mongoose.Schema({
         required: true,
     },
     yearOfRelease:{
-        type:Number,required:true
+        type:Number,
+        required:true
     },
     actors:[{
         type: mongoose.Schema.Types.ObjectId,

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../model/userModel.js';
+import User from '../Model/userModel.js';
 
 // Protect routes
 const protect = async (req, res, next) => {
