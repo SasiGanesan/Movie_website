@@ -48,16 +48,10 @@ const updateMovie = async(req,res)=>{
     try {
         const movie_id = req.params.id;
         console.log(movie_id)
-        // const { name, yearOfRelease, actors, producer, poster } = req.body;
-        const { yearOfRelease } = req.body;
-        // console.log(name, yearOfRelease, actors, producer, poster)
+        const { name, yearOfRelease, actors, producer, poster } = req.body;
         const updatedMovie = await Movie.findByIdAndUpdate(
             movie_id,
-            { yearOfRelease: yearOfRelease },// Only update yearOfRelease
-            // { name:name} ,
-            // {actors:actors},
-            // {producer:producer},
-            // {poster:poster},
+            { name, yearOfRelease, actors, producer, poster },
             { new: true } // To return the updated movie
         );
         if (!updatedMovie) {
