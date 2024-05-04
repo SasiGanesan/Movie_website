@@ -56,10 +56,10 @@ const producerValidation = async(req,res,next)=>{
 const movieValidation = async (req,res,next)=>{
     const movieSchema = Joi.object({
         name :Joi.string().trim().required(), 
-        yearOfRelease: Joi.string.number().required(),
-        actors: Joi.string.required(), 
-        producer: Joi.string.required(), 
-        poster:Joi.string.required()
+        yearOfRelease: Joi.number().integer().required(),
+        actors: Joi.required(), 
+        producer: Joi.string().required(), 
+        poster:Joi.string().required()
     })
     const {error} = await movieSchema.validate(req.body);
     if(error){
@@ -74,12 +74,12 @@ const movieValidation = async (req,res,next)=>{
 //actor validation
 const actorValidation = async(req,res,next)=>{
     const actorSchema =Joi.object({
-        name: Joi.string().required(),
+        name: Joi.string().trim().required(),
         gender: Joi.string().required(),
         dob: Joi.string().required(),
         bio:Joi.string().required()
     })
-    const {error} = await movieSchema.validate(req.body);
+    const {error} = await actorSchema.validate(req.body);
     if(error){
         return res.status(400).json({
             message: error.message

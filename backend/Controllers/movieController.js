@@ -49,6 +49,7 @@ const updateMovie = async(req,res)=>{
         const movie_id = req.params.id;
         console.log(movie_id)
         const { name, yearOfRelease, actors, producer, poster } = req.body;
+        console.log(name, yearOfRelease, actors, producer, poster )
         const updatedMovie = await Movie.findByIdAndUpdate(
             movie_id,
             { name, yearOfRelease, actors, producer, poster },
@@ -56,9 +57,9 @@ const updateMovie = async(req,res)=>{
         );
         if (!updatedMovie) {
             return res.status(404).json({ message: 'Movie not found' });
-        }
-        
-        return res.status(200).json({ message: 'Movie updated successfully', updatedMovie });
+        }else{
+            return res.status(200).json({ message: 'Movie updated successfully', updatedMovie });
+        }    
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: 'Internal Server Error' }); 
