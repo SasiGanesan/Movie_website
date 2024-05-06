@@ -1,16 +1,17 @@
-import { apiSlice } from "./apiSlice";
-import { PRODUCERS_URl } from "../constants";
+// reducers/producersSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
-export const producerApiSlice = apiSlice.injectEndpoints({
-    endpoints : (builder)=>({
-        addProducer: builder.mutation({
-            query: (producer)=>({
-                url:`${PRODUCERS_URl}`,
-                method : "POST",
-                body : {...producer}, 
-            }),
-        }),
-    })
-})
+const producersSlice = createSlice({
+  name: 'producers',
+  initialState: [],
+  reducers: {
+    // setProducers: (state, action) => action.payload,
+    addProducer: (state, action) => {
+      state.push(action.payload);
+    },
+    // 
+  }
+});
 
-export const {useAddProducerMutation} = producerApiSlice
+export const { addProducer } = producersSlice.actions;
+export default producersSlice.reducer;

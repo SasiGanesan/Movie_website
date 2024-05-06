@@ -1,23 +1,18 @@
-import { apiSlice } from "./apiSlice";
-import { MOVIES_URL } from "../constants";
+// reducers/moviesSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
-export const movieApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder)=>({
-        createMovie : builder.mutation({
-            query :(movie)=>({
-                url : `${MOVIES_URL}`,
-                method : "POST",
-                body : {...movie},
-            }),
-        }),
+const moviesSlice = createSlice({
+  name: 'movies',
+  initialState: [],
+  reducers: {
+    createMovie: (state, action) => {
+        state.push(action.payload);
+      },
+    getAllMovies: (state, action) => action.payload,
+    
+//
+  }
+});
 
-        getAllMovies:builder.query({
-            query :()=>({
-                url : `${MOVIES_URL}`,
-            }),
-            keepUnusedDataFor : 5,
-        }),
-    }),
-})
-
-export const {useCreateMovieMutation,useGetAllMoviesQuery}=movieApiSlice
+export const { createMovie ,getAllMovies} = moviesSlice.actions;
+export default moviesSlice.reducer;

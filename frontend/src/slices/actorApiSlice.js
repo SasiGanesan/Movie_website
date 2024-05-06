@@ -1,16 +1,17 @@
-import { apiSlice } from "./apiSlice";
-import { ACTORS_URL } from "../constants";
+// reducers/actorsSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
-export const actorApiSlice = apiSlice.injectEndpoints({
-    endpoints : (builder)=>({
-        addActor: builder.mutation({
-            query: (actor)=>({
-                url:`${ACTORS_URL}`,
-                method : "POST",
-                body : {...actor}, 
-            }),
-        }),
-    })
-})
+const actorsSlice = createSlice({
+  name: 'actors',
+  initialState: [],
+  reducers: {
+    // setActors: (state, action) => action.payload,
+    addActor: (state, action) => {
+      state.push(action.payload);
+    },
+    
+  }
+});
 
-export const {useAddActorMutation} = actorApiSlice
+export const { addActor } = actorsSlice.actions;
+export default actorsSlice.reducer;

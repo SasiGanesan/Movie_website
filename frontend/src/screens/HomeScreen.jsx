@@ -1,13 +1,15 @@
 import React from 'react'
+import MovieList from '../components/MovieList'
+import MovieForm from '../components/MovieForm'
 
 const HomeScreen = () => {
   return (
-    <form className='w-96 flex items-center' >
-        <div className=''>
-        <input className='p-4 outline-none align-middle' type='text' placeholder='Search Movie...' title='title' />
-        <button type='submit' className=''></button>
-        </div>
-    </form>
+   <>
+   <MovieForm/>
+   <div className='bg-white mb-20'>
+    <MovieList/>
+   </div>
+   </>
   )
 }
 
