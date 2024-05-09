@@ -1,4 +1,4 @@
-import { USERS_URL, TICKET_URL,TRIPS_URL, MOVIES_URL } from "../constants";
+import { USERS_URL, MOVIES_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
 export const usersApiSlice = apiSlice.injectEndpoints({

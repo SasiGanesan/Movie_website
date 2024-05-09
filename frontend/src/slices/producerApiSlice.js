@@ -1,13 +1,18 @@
 // reducers/producersSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  producers:localStorage.getItem ('producers')? JSON.parse (localStorage.getItem('producers')):null,
+};
+
+
 const producersSlice = createSlice({
   name: 'producers',
-  initialState: [],
+  initialState,
   reducers: {
-    // setProducers: (state, action) => action.payload,
     addProducer: (state, action) => {
-      state.push(action.payload);
+     state.producers = action.payload;
+     localStorage.setItem('producers', JSON.stringify(state.producers));
     },
     // 
   }

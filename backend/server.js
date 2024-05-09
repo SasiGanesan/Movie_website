@@ -7,11 +7,17 @@ import userRoutes from './Routes/userRoutes.js';
 import movieRoutes from './Routes/movieRoutes.js';
 import actorRoutes from './Routes/actorRoutes.js';
 import producerRoutes from './Routes/producerRoutes.js';
+import cors from 'cors';
 connectDB();
+
+
+const app = express();
+// Allow requests from http://localhost:3000
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 const port = process.env.PORT || 8000;
 
-const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}))

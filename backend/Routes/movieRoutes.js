@@ -4,7 +4,7 @@ import {protect,admin} from '../middleware/authMiddleware.js';
 import { movieValidation } from '../middleware/validationMiddleware.js';
 
 const router = express.Router();
-router.post('/movie',protect,admin,movieValidation,createMovie )
+router.post('/movie',movieValidation,createMovie )
 router.get('/',getAllMovies)
 router.get('/:id',getMovieById)
 router.put('/:id',protect,admin,updateMovie)

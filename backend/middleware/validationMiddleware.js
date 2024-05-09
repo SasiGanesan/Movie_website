@@ -55,11 +55,11 @@ const producerValidation = async(req,res,next)=>{
 
 const movieValidation = async (req,res,next)=>{
     const movieSchema = Joi.object({
-        name :Joi.string().trim().required(), 
-        yearOfRelease: Joi.number().integer().required(),
-        actors: Joi.required(), 
-        producer: Joi.string().required(), 
-        poster:Joi.string().required()
+        name :Joi.string(), 
+        yearOfRelease: Joi.number().integer(),
+        actors: Joi.array().items(Joi.string().trim()),// Change Joi.string() to Joi.array().items(Joi.string())
+        producer: Joi.string().trim(),
+        poster:Joi.string().valid('image/png', 'image/jpeg', 'image/gif'),
     })
     const {error} = await movieSchema.validate(req.body);
     if(error){

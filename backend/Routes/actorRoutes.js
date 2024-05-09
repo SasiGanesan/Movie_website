@@ -4,6 +4,6 @@ import {protect,admin} from '../middleware/authMiddleware.js';
 import { actorValidation } from '../middleware/validationMiddleware.js';
 
 const router = express.Router();
-router.post('/actor',protect,admin,actorValidation,addActor )
+router.post('/actor',actorValidation,addActor )
 
 export default router;

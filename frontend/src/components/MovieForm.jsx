@@ -1,77 +1,63 @@
-// components/MovieForm.js
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import  createMovie from '../slices/movieApiSlice';
+import axios from 'axios';
 
 const MovieForm = () => {
-  const dispatch = useDispatch();
-  const producers = useSelector(state => state.producers);
-  const actors = useSelector(state => state.actors);
-  const [formData, setFormData] = useState({
-    name: '',
-    yearOfRelease: '',
-    plot: '',
-    poster: '',
-    producer: '',
-    actors: []
-  });
+  const [name, setName] = useState('');
+  const [yearOfRelease, setYearOfRelease] = useState('');
+  const [actors, setActors] = useState('');
+  const [producer, setProducer] = useState('');
+  const [poster, setPoster] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData(); 
+      formData.append('name', name);
+      formData.append('yearOfRelease', yearOfRelease);
+      formData.append('actors', actors);
+      formData.append('producer', producer);
+      formData.append('poster', poster);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(createMovie(formData));
-    setFormData({
-      name: '',
-      yearOfRelease: '',
-      plot: '',
-      poster: '',
-      producer: '',
-      actors: []
-    });
+      const response = await axios.post('http://localhost:4000/api/Movies/movie', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+        },
+      });
+      console.log(response.data);
+      // Reset form fields
+      setName('');
+      setYearOfRelease('');
+      setActors('');
+      setProducer('');
+      setPoster(null);
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   return (
-    <div>
-      <h2>Add Movie</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
-        </label>
-        <label>
-          Year of Release:
-          <input type="number" name="yearOfRelease" value={formData.yearOfRelease} onChange={handleChange} />
-        </label>
-        <label>
-          Plot:
-          <textarea name="plot" value={formData.plot} onChange={handleChange} />
-        </label>
-        <label>
-          Poster:
-          <input type="text" name="poster" value={formData.poster} onChange={handleChange} />
-        </label>
-        <label>
-          Producer:
-          <select name="producer" value={formData.producer} onChange={handleChange}>
-            <option value="">Select Producer</option>
-            {producers.map(producer => (
-              <option key={producer._id} value={producer._id}>{producer.name}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Actors:
-          <select name="actors" multiple value={formData.actors} onChange={handleChange}>
-            {actors.map(actor => (
-              <option key={actor._id} value={actor._id}>{actor.name}</option>
-            ))}
-          </select>
-        </label>
-        <button type="submit">Add Movie</button>
+    <div className='flex flex-col items-center pt-10'>
+   
+      <form onSubmit={handleSubmit} className='h-104 w-80 p-2 bg-black inline-block flex flex-col bg-gradient-to-r from-green-400 to-blue-500 focus:from-pink-500 focus:to-yellow-500'>
+        <label htmlFor="name" className='flex-col inline text-yellow-400'> Name:</label>
+          <input type="text" value={name} onChange={(event) => setName(event.target.value)} className='block outline-none' />
+        <br/>
+        <label htmlFor='yearOfRelease' className='flex-col inline-block text-yellow-400'>Year of Release:</label>
+          <input type="text" value={yearOfRelease} onChange={(event) => setYearOfRelease(event.target.value)} className='block outline-none' />
+          <br/>
+        <label htmlFor='actors' className='flex-col inline-block text-yellow-400'>Actors:</label>
+          <input type="text" value={actors} onChange={(event) => setActors(event.target.value)} className='block outline-none'  />
+          <br/>
+        <label htmlFor='producer' className='flex-col inline-block text-yellow-400'>Producer: </label>
+          <input type="text" value={producer} onChange={(event) => setProducer(event.target.value)} className='block outline-none' />
+          <br/>
+          <label htmlFor='poster' className='flex-col inline-block text-yellow-400'>Poster:</label>
+       <input type='file' id='poster' onChange={(event) => setPoster(event.target.files[0])} className='block outline-none' />
+        <br/>
+        <button type="submit" className='p-6 text-yellow-400'>Add Movie</button>
       </form>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );
 };

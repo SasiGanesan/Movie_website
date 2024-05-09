@@ -11,6 +11,7 @@ const movieSchema = new mongoose.Schema({
     },
     actors:[{
         type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Actor',
     }],
     producer : {
