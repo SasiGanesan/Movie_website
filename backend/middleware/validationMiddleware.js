@@ -60,7 +60,7 @@ const movieValidation = async (req,res,next)=>{
         actors: Joi.array().items(Joi.string().trim()),// Change Joi.string() to Joi.array().items(Joi.string())
         producer: Joi.string().trim(),
         poster:Joi.string().valid('image/png', 'image/jpeg', 'image/gif'),
-    })
+    });
     const {error} = await movieSchema.validate(req.body);
     if(error){
         return res.status(400).json({

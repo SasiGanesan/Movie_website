@@ -1,17 +1,18 @@
 import React from 'react'
 import MovieList from '../components/MovieList';
-import {Link} from 'react-router-dom';
-// import MovieForm from '../components/MovieForm'
+import images from '../assets/images.jpg'
+import Movies from '../components/Movies'
+import SearchBox from '../components/SearchBox'
 
 const HomeScreen = () => {
   return (
    <>
+   {/* <img src={images} alt='bgImage' className='fixed w-full -z-10 h-full'/>     */}
    {/* <MovieForm className = 'bg-blue-400'/> */}
-   <div className='bg-white mb-20'>
+   <div>
+   {/* <img src={images} alt='bgImage' className='fixed w-full -z-10 h-full'/> */}
+    <Movies/>
     <MovieList/>
-   </div>
-   <div className='flex flex-col items-center'>
-   <Link to='/movieForm' className='inline-block place-items-center bg-slate-100 bg-gradient-to-l from-slate-500 '>Add Movie </Link>
    </div>
    </>
   )

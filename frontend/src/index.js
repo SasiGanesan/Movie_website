@@ -11,7 +11,6 @@ import LoginScreen from './screens/LoginScreen.jsx';
 import MovieForm from './components/MovieForm.jsx';
 import ActorForm from './components/ActorForm.jsx';
 import ProducerForm from './components/ProducerForm.jsx';
-// import RegisterScreen from './screens//RegisterScreen.jsx'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path = '/' element ={<App/>}>

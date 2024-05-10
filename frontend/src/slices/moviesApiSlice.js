@@ -1,8 +1,8 @@
-import {createSlice, createAsyncThunk, isRejected} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import Axios from 'axios';
 
 export const fetchData = createAsyncThunk('get', async () => {
-    const response = await Axios.get(' `https://www.omdbapi.com/?t=${data}&apikey=562f3089`');
+    const response = await Axios.get(`http://www.omdbapi.com/?i=${fetchData.imdbID}&apikey=33c0a7ea`);
     return response.data;
 })
 

@@ -43,11 +43,10 @@ const MovieList = () => {
 
   return (
     <>
-    <h2>Movie List</h2>
       <div >
-        <ul className='inline-flex flex-row space-x-10 p-6 bg-black bg-gradient-to-r from-white' >
+        <ul className='inline-flex flex-row space-x-10 p-6' >
           {movies.map(movie => (
-            <li key={movie._id} className='p-6 bg-yellow-400 font-sans font-bold bg-gradient-to-r from-blue-500'>
+            <li key={movie._id} className='p-6 bg-slate-400 font-sans font-bold bg-gradient-to-r from-yellow-400'>
               <h3 className='text-yellow-400 bg-black'>{movie.name || movie.Title}</h3>
               <img src={movie.poster} alt={movie.name || movie.Title}/>
               <p>Year of Release: {movie.yearOfRelease || movie.Year}</p>

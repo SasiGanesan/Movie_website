@@ -1,6 +1,7 @@
 import Movie from "../Model/movieModel.js";
 import multer from 'multer';
-import path from 'path'
+import path from 'path';
+// import { ObjectId } from "mongodb";
 
 //multer middleware to save uploaded files to the ./upload/images directory. 
 //The filenames are constructed based on the original filename, a timestamp, 
@@ -25,42 +26,36 @@ const createMovie = async (req, res) => {
     upload.single('poster')(req,res,async(err)=>{
     try {
         // Check if an error occurred during file upload.
-        if (req.file instanceof multer.MulterError) {
-            return res.status(400).json({ message: req.file.message });
-        } else if (req.file === undefined) {
+        if (err instanceof multer.MulterError) {
+            return res.status(400).json({ message: err.message });
+        } else if (err) {
             return res.status(400).json({ message: "Please upload an image" });
+        }
+         // it checks if the uploaded file (req.file) exists and has a filename
+         if(!req.file || !req.file.filename){
+            return res.status (400).json({message:"Please upload an image" });
         }
 
         const { name, yearOfRelease, actors, producer } = req.body;
-        const poster = req.file.filename;
+        const poster = `${req.file.filename}`;
 
         const existingMovie = await Movie.findOne({ name });
         if (existingMovie) {
             return res.status(400).json({ message: "This movie already exists" });
         }
 
+        const actorsArray = actors.split(',').map((actor) => (actor.trim()));
         // Create Movie
         const movie = await Movie.create({
             name,
             yearOfRelease,
-            actors,
+            actors: actorsArray,
             producer,
-            poster: poster // Assuming your Movie model has a 'poster' field
+            poster
         });
 
         // Check if movie is created successfully
-        if (movie) {
-            return res.status(201).json({
-                user_id: movie.user_id, // Make sure 'user_id' is set properly in the Movie model
-                name: movie.name,
-                yearOfRelease: movie.yearOfRelease,
-                actors: movie.actors,
-                producer: movie.producer,
-                poster: movie.poster
-            });
-        } else {
-            return res.status(500).json({ message: "Failed to create movie" });
-        }
+        return res.status(200).json(movie);
     }catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error" });

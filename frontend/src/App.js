@@ -10,14 +10,11 @@ function App() {
   
   return (
     <>
-
-    <div>
-    <img src={images} alt='bgImage' className='fixed w-full -z-10 h-full'/>
+<img src={images} alt='bgImage' className='fixed w-full -z-10 h-full'/>    
       <Header/>
       <main>
       <Outlet/>
       </main>
-      </div>
       <ToastContainer />
     </>
   );
